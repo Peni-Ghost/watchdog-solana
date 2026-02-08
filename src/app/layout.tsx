@@ -1,10 +1,16 @@
 import { Navbar } from '@/components/ui/Navbar';
 import { Inter, Space_Grotesk, JetBrains_Mono } from 'next/font/google';
+import type { Metadata } from 'next';
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], variable: '--font-space' });
 const mono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono' });
+
+export const metadata: Metadata = {
+  title: 'SolGuard - Solana Token Security Analysis',
+  description: 'Institutional-grade security analysis for Solana tokens. Detect rug pulls, honey pots, and malicious contracts in milliseconds.',
+};
 
 export default function RootLayout({
   children,
