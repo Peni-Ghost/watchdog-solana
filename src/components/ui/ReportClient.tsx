@@ -9,6 +9,11 @@ interface ReportClientProps {
 }
 
 export function ReportClient({ report, address }: ReportClientProps) {
+  // Compute formatted supply once to avoid recalculation on every render
+  const formattedSupply = report.decimals > 0 
+    ? (report.supply / Math.pow(10, report.decimals)).toLocaleString()
+    : report.supply.toLocaleString();
+
   return (
     <div className="max-w-6xl mx-auto px-6 py-12">
       
@@ -74,7 +79,7 @@ export function ReportClient({ report, address }: ReportClientProps) {
               <StatRow label="Mint Auth" value={report.mintAuthority ? "Enabled ⚠️" : "Disabled ✅"} />
               <StatRow label="Freeze Auth" value={report.freezeAuthority ? "Enabled ⚠️" : "Disabled ✅"} />
               <StatRow label="Decimals" value={report.decimals.toString()} />
-              <StatRow label="Supply" value={(report.supply / Math.pow(10, report.decimals)).toLocaleString()} />
+              <StatRow label="Supply" value={formattedSupply} />
             </div>
           </div>
         </div>

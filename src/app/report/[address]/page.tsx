@@ -16,7 +16,22 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function ReportPage({ params }: PageProps) {
   const { address } = await params;
-  const report = await analyzeToken(address);
-
-  return <ReportClient report={report} address={address} />;
+  
+  try {
+    const report = await analyzeToken(address);
+    return <ReportClient report={report} address={address} />;
+  } catch (error) {
+    // Fallback error handling in case analyzeToken throws unexpectedly
+    const fallbackReport = {
+      address,
+      supply: 0,
+      decimals: 0,
+      mintAuthority: true,
+      freezeAuthority: true,
+      riskScore: 100,
+      riskLevel: 'CRITICAL' as const,
+      details: ['An unexpected error occurred while analyzing the token.'],
+    };
+    return <ReportClient report={fallbackReport} address={address} />;
+  }
 }
